@@ -9,15 +9,9 @@ userIdRouter.get('/:id', (req, res) => {
     .readFile(usersPath, { encodinng: 'utf8' })
     .then((data) => {
       const users = JSON.parse(data);
-      let index = false;
-      for (let i = 0; i < users.length; i += 1) {
-        if (users[i]._id === id) {
-          index = i;
-          break;
-        }
-      }
-      if (index) {
-        res.send(users[index]);
+      const userEx = users.find((user) => user._id === id);
+      if (userEx) {
+        res.send(userEx);
       } else {
         res.status(404).send({ message: 'Нет пользователя с таким id' });
       }
